@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="19e7b9f3-5319-44f8-9b2b-b26b898f853f" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="my-first-projectFlow" doc:id="0c631ed2-530c-4e68-b05b-9bd3772a9032" >
+		<http:listener doc:name="Listener" doc:id="bd56794c-590f-4bfd-89aa-8c026b7e1479" config-ref="HTTP_Listener_config" path="/first"/>
+		<logger level="INFO" doc:name="startLog" doc:id="54141c01-f9cb-4a70-b720-f791d8771c13" message="startLog"/>
+		<ee:transform doc:name="Transform Message" doc:id="d43fb5f7-06e3-4754-b633-22ff34103398" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "Hello, this my first project-GitHub/Jenkins/CICD pipelines"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="endLog" doc:id="1f09fdd8-ce74-4cf0-a4d8-8834ee5b4edb" message="endLog"/>
+	</flow>
+</mule>
